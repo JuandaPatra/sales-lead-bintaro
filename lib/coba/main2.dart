@@ -6,7 +6,6 @@ import 'dart:core';
 import 'package:flutter_sales_lead/pages/leads.dart';
 import 'package:flutter_sales_lead/pages/report.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -23,11 +22,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidht = MediaQuery.of(context).size.width;
-  final List<Widget> screens = [
-      LeadsPage(mediaQueryWidht: mediaQueryWidht, mediaQueryHeight:mediaQueryHeight),
-      DashboardPage(),
-      ReportPage(mediaQueryWidht: mediaQueryWidht, mediaQueryHeight:mediaQueryHeight),
-    ];
 
     final myAppBar =AppBar(
           title: Row(
@@ -53,10 +47,14 @@ class _MyAppState extends State<MyApp> {
         MediaQuery.of(context).padding.top;
     int currentTab = 0;
 
-    
+    final List<Widget> screens = [
+      LeadsPage(),
+      DashboardPage(),
+      ReportPage(),
+    ];
 
     final PageStorageBucket bucket = PageStorageBucket();
-    Widget currentScreen = screens[2];
+    Widget currentScreen = screens[0];
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -79,7 +77,7 @@ class _MyAppState extends State<MyApp> {
               children: [
                 MaterialButton(
                   onPressed: () => (setState(() {
-                    currentScreen = LeadsPage(mediaQueryWidht: mediaQueryWidht, mediaQueryHeight:mediaQueryHeight);
+                    currentScreen = LeadsPage();
                     currentTab = 0;
                   })),
                   child: Column(
@@ -99,7 +97,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 MaterialButton(
                   onPressed: () => (setState(() {
-                    currentScreen = ReportPage(mediaQueryWidht: mediaQueryWidht, mediaQueryHeight:mediaQueryHeight);
+                    currentScreen = ReportPage();
                     currentTab = 1;
                     print(currentTab);
                   })),
@@ -120,7 +118,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 MaterialButton(
                   onPressed: () => (setState(() {
-                    currentScreen = LeadsPage(mediaQueryWidht: mediaQueryWidht, mediaQueryHeight:mediaQueryHeight);
+                    currentScreen = LeadsPage();
                     currentTab = 2;
                   })),
                   child: Column(
