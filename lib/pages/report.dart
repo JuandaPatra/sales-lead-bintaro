@@ -4,11 +4,12 @@ import 'package:faker/faker.dart';
 class ReportPage extends StatelessWidget {
   const ReportPage({
     super.key,
-    required this.mediaQueryWidht,
-    required this.mediaQueryHeight,
+    // required this.mediaQueryWidht,
+    // required this.mediaQueryHeight,
   });
-  final double mediaQueryWidht;
-  final double mediaQueryHeight;
+  // final double mediaQueryWidht;
+  // final double mediaQueryHeight;
+  
   @override
   Widget build(BuildContext context) {
     var faker = Faker();
@@ -23,8 +24,8 @@ class ReportPage extends StatelessWidget {
               ),
             ),
           ),
-          width: mediaQueryWidht,
-          height: mediaQueryHeight * 0.10,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.10,
           child: Container(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -42,7 +43,7 @@ class ReportPage extends StatelessWidget {
           )),
         ),
         Container(
-          height: mediaQueryHeight * 0.7,
+          height: MediaQuery.of(context).size.height * 0.7,
           child: ListView.builder(
               itemCount: 1,
               itemBuilder: (context, index) {
