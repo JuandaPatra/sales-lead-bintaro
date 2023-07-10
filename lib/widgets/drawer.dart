@@ -53,12 +53,12 @@ class MyDrawer extends StatelessWidget {
                 height: 35,
                 child: ListTile(
                   onTap: () => profileC.logout(),
-                  leading: profileC.isLogin == true
+                  leading: profileC.isLogin.isTrue
                       ? const Icon(Icons.logout)
                       : const Icon(Icons.login),
                   title: Align(
                     alignment: const Alignment(-1.3, 0),
-                    child: profileC.isLogin == true
+                    child: profileC.isLogin.isTrue
                         ? const Text("Logout")
                         : const Text("Login"),
                   ),

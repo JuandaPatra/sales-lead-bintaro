@@ -20,6 +20,8 @@ class UserController extends GetxController {
   var username = ''.obs;
   var emailSave = ''.obs;
 
+  var leadsPage = false.obs;
+
   late TextEditingController emailC;
   late TextEditingController password;
 
@@ -42,6 +44,9 @@ class UserController extends GetxController {
     if (hasExpired == false) {
       isTokenAuth.value = true;
       isLogin.value = true;
+      Future.delayed(const Duration(seconds: 5), () {
+        leadsPage.value = true;
+      });
     }
   }
 

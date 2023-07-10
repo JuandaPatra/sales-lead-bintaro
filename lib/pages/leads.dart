@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter_sales_lead/controller/leadController.dart';
+import 'package:flutter_sales_lead/controller/userController.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LeadsPage extends StatelessWidget {
-
   final leadC = Get.put(LeadController());
   // final leadsC = Get.lazyPut(() => LeadController());
+  final profileC = Get.put(UserController());
 
   List<String> listPipeline = [
     "New",
@@ -19,20 +20,14 @@ class LeadsPage extends StatelessWidget {
     "Lost"
   ];
 
-  List<String> statusLead = [
-    "Hot",
-    "Warm",
-    "Cold",
-    "Close"
-  ];
+  List<String> statusLead = ["Hot", "Warm", "Cold", "Close"];
 
   @override
   Widget build(BuildContext context) {
-    var faker = Faker();
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               bottom: BorderSide(
                 color: Colors.grey,
@@ -42,14 +37,13 @@ class LeadsPage extends StatelessWidget {
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.15,
-          child: Container(
+          child: SizedBox(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: Text(
                   'Leads',
                   style: TextStyle(fontSize: 30),
@@ -61,11 +55,11 @@ class LeadsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: FilterChip(
-                        label: Container(
+                        label: const SizedBox(
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: 10),
                                 child: Text(
                                   'Sort By',
                                   style: TextStyle(color: Colors.black),
@@ -81,21 +75,21 @@ class LeadsPage extends StatelessWidget {
                         onSelected: (select) {
                           Get.dialog(AlertDialog(
                             insetPadding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))),
-                            title: Container(
+                            title: SizedBox(
                               // color: Colors.blueAccent,
                               width: 300,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Sort By'),
+                                  const Text('Sort By'),
                                   TextButton(
                                       style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
-                                          minimumSize: Size(10, 10),
+                                          minimumSize: const Size(10, 10),
                                           // backgroundColor: Colors.red,
                                           tapTargetSize:
                                               MaterialTapTargetSize.shrinkWrap,
@@ -103,11 +97,11 @@ class LeadsPage extends StatelessWidget {
                                       onPressed: () {
                                         Get.back();
                                       },
-                                      child: Icon(Icons.close))
+                                      child: const Icon(Icons.close))
                                 ],
                               ),
                             ),
-                            content: Container(
+                            content: SizedBox(
                               height: 100,
                               width: 300,
                               // color: Colors.amber,
@@ -120,8 +114,8 @@ class LeadsPage extends StatelessWidget {
                                     runSpacing: 4.0, // gap between lines
                                     children: <Widget>[
                                       FilterChip(
-                                          padding: EdgeInsets.all(10),
-                                          label: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          label: const SizedBox(
                                             child: Text('Update Terakhir Naik'),
                                           ),
                                           onSelected: (select) {
@@ -129,7 +123,7 @@ class LeadsPage extends StatelessWidget {
                                           }),
                                       FilterChip(
                                           padding: EdgeInsets.all(10),
-                                          label: Container(
+                                          label: const SizedBox(
                                             child:
                                                 Text('Update Terakhir Turun'),
                                           ),
@@ -147,11 +141,11 @@ class LeadsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: FilterChip(
-                        label: Container(
+                        label: const SizedBox(
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: 10),
                                 child: Text(
                                   'Pilih Filter',
                                   style: TextStyle(color: Colors.black),
@@ -165,98 +159,74 @@ class LeadsPage extends StatelessWidget {
                           ),
                         ),
                         onSelected: (select) {
-                          // print(select);
                           Get.dialog(AlertDialog(
                             insetPadding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))),
-                            title: Container(
-                              // color: Colors.blueAccent,
+                            title: SizedBox(
                               width: 300,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Filter Berdasarkan'),
+                                  const Text('Filter Berdasarkan'),
                                   TextButton(
                                       style: TextButton.styleFrom(
                                           padding: EdgeInsets.zero,
-                                          minimumSize: Size(10, 10),
-                                          // backgroundColor: Colors.red,
+                                          minimumSize: const Size(10, 10),
                                           tapTargetSize:
                                               MaterialTapTargetSize.shrinkWrap,
                                           alignment: Alignment.centerRight),
                                       onPressed: () {
                                         Get.back();
                                       },
-                                      child: Icon(Icons.close))
+                                      child: const Icon(Icons.close))
                                 ],
                               ),
                             ),
-                            content: Container(
+                            content: SizedBox(
                               height: 400,
                               width: 300,
-                              // color: Colors.amber,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Text('Tahapan Lead Pipeline'),
                                   ),
                                   Wrap(
                                     spacing: 8.0, // gap between adjacent chips
                                     runSpacing: 4.0, // gap between lines
-                                    children: listPipeline.map((e) => FilterChip(label: Container(child: Text(e),),padding: EdgeInsets.all(10), onSelected: (e){print(e);})).toList(),
-                                    
+                                    children: listPipeline
+                                        .map((e) => FilterChip(
+                                            label: Container(
+                                              child: Text(e),
+                                            ),
+                                            padding: const EdgeInsets.all(10),
+                                            onSelected: (e) {
+                                              print(e);
+                                            }))
+                                        .toList(),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Text('Status Lead'),
                                   ),
                                   Wrap(
                                     spacing: 8.0, // gap between adjacent chips
                                     runSpacing: 4.0, // gap between lines
-                                    children: statusLead.map((e) => FilterChip(label: Container(child: Text(e),),padding: EdgeInsets.all(10), onSelected: (e){print(e);})).toList(),
-                                    
-                                    // children: <Widget>[
-                                    //   FilterChip(
-                                    //       padding: EdgeInsets.all(10),
-                                    //       label: Container(
-                                    //         child: Text('Hot'),
-                                    //       ),
-                                    //       onSelected: (select) {
-                                    //         print(print);
-                                    //       }),
-                                    //   FilterChip(
-                                    //       padding: EdgeInsets.all(10),
-                                    //       label: Container(
-                                    //         child: Text('Warm'),
-                                    //       ),
-                                    //       onSelected: (select) {
-                                    //         print(print);
-                                    //       }),
-                                    //   FilterChip(
-                                    //       padding: EdgeInsets.all(10),
-                                    //       label: Container(
-                                    //         child: Text('Cold'),
-                                    //       ),
-                                    //       onSelected: (select) {
-                                    //         print(print);
-                                    //       }),
-                                    //   FilterChip(
-                                    //       padding: EdgeInsets.all(10),
-                                    //       label: Container(
-                                    //         child: Text('Close'),
-                                    //       ),
-                                    //       onSelected: (select) {
-                                    //         print(print);
-                                    //       }),
-                                    // ],
+                                    children: statusLead
+                                        .map((e) => FilterChip(
+                                            label: SizedBox(
+                                              child: Text(e),
+                                            ),
+                                            padding: EdgeInsets.all(10),
+                                            onSelected: (e) {
+                                              print(e);
+                                            }))
+                                        .toList(),
                                   )
                                 ],
                               ),
@@ -269,90 +239,174 @@ class LeadsPage extends StatelessWidget {
             ],
           )),
         ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.67,
-          child: ListView.builder(
-              itemCount: 100,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      side: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    elevation: 16,
-                    shadowColor: Colors.grey,
-                    child: ListTile(
-                      onTap: (){
-                        Get.dialog(
-                          AlertDialog(
-                            content: Text('Index ke :${index}'),
-                          )
+        Obx(() => profileC.leadsPage.value == true
+            ? SizedBox(
+                height: MediaQuery.of(context).size.height * 0.67,
+                child: ListView.builder(
+                    itemCount: 100,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: const BorderSide(
+                              color: Colors.black,
+                            ),
+                          ),
+                          elevation: 16,
+                          shadowColor: Colors.grey,
+                          child: ListTile(
+                            onTap: () {
+                              Get.dialog(AlertDialog(
+                                content: Text('Index ke :$index'),
+                              ));
+                            },
+                            title: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              child: Text(
+                                'New',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                            ),
+                            subtitle: SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      child: Text(
+                                        '${leadC.lead.value.leadName}',
+                                        style: const TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 5),
+                                      child: Text(
+                                        'Company Name',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      child: Text(
+                                        'Sales :${leadC.lead.value.salesName}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                    Text('${leadC.lead.value.date}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            trailing: const Icon(Icons.add),
+                          ),
+                        ),
+                      );
+                    }),
+              )
+            : SizedBox(
+                height: MediaQuery.of(context).size.height * 0.67,
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
+                  child: ListView.builder(
+                      itemCount: 40,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            elevation: 16,
+                            shadowColor: Colors.grey,
+                            child: ListTile(
+                              onTap: () {
+                                Get.dialog(AlertDialog(
+                                  content: Text('Index ke :$index'),
+                                ));
+                              },
+                              title: const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 15),
+                                child: Text(
+                                  'New',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.blueAccent,
+                                  ),
+                                ),
+                              ),
+                              subtitle: SizedBox(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
+                                        child: Text(
+                                          '${leadC.lead.value.leadName}',
+                                          style: const TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        child: Text(
+                                          'Company Name',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5),
+                                        child: Text(
+                                          'Sales :${leadC.lead.value.salesName}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      Text('${leadC.lead.value.date}'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              trailing: const Icon(Icons.add),
+                            ),
+                          ),
                         );
-                      },
-                      title: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
-                        child: Text(
-                          'New',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.blueAccent,
-                          ),
-                        ),
-                      ),
-                      subtitle: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: Text(
-                                  '${leadC.lead.value.leadName}',
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: Text(
-                                  'Company Name',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: Text(
-                                  'Sales :${leadC.lead.value.salesName}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 18),
-                                ),
-                              ),
-                              Text(
-                                  '${leadC.lead.value.date}'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      trailing: const Icon(Icons.add),
-                    ),
-                  ),
-                );
-              }),
-        ),
+                      }),
+                ),
+              ))
       ],
     );
   }
