@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter_sales_lead/controller/leadController.dart';
 import 'package:flutter_sales_lead/controller/userController.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -25,271 +25,213 @@ class _DashboardPageState extends State<DashboardPage> {
   final totalC = Get.put(LeadController(), tag: 'total');
 
   final profileC = Get.put(UserController());
+
+  var dateFrom = TextEditingController();
+  var dateToInput = TextEditingController();
+  late DateTime dateTo;
+
+  final myControllerDateFrom = TextEditingController();
+  final myControllerDateTo = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDateFrom(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        var dateTime = DateTime.parse(selectedDate.toString());
+        var formate1 = "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+        myControllerDateFrom.text = formate1;
+      });
+    }
+  }
+
+  Future<void> _selectDateTo(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        var dateTime = DateTime.parse(selectedDate.toString());
+        var formate1 = "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+        myControllerDateTo.text = formate1;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var faker = Faker();
-
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey,
-                width: 1.0,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
               ),
             ),
-          ),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.29,
-          child: Container(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                child: Text(
-                  'Dashboard',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Container(child: Text("Sort Berdasarkan Sales")),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.29,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: Text(
+                    'Dashboard',
+                    style: TextStyle(fontSize: 30),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: FloatingActionButton(
-                              onPressed: () {},
-                              child: Text('0'),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      child: Text("Sort Berdasarkan Sales"),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              child: DropdownButton(
+                                hint: const Text('Pilih Sales...'),
+                                items: listItem
+                                    .map((e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Text(e),
+                                        ))
+                                    .toList(),
+                                value: selected,
+                                onChanged: (value) => setState(() {
+                                  selected = value.toString();
+                                }),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text('Pilih Periode'),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 3, 0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 10),
+                              controller: myControllerDateFrom,
+                              decoration: const InputDecoration.collapsed(
+                                  hintText: 'Date From',
+                                  fillColor: Colors.transparent,
+                                  hintStyle: TextStyle(fontSize: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.red))),
+                              onTap: () {
+                                // Below line stops keyboard from appearing
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+
+                                _selectDateFrom(context);
+                              },
                             ),
                           ),
-                          Container(
-                            width: 120,
-                            child: DropdownButton(
-                              hint: Text('Pilih Sales...'),
-                              items: listItem
-                                  .map((e) => DropdownMenuItem(
-                                        child: Text(e),
-                                        value: e,
-                                      ))
-                                  .toList(),
-                              value: selected,
-                              onChanged: (value) => setState(() {
-                                print(selected);
-                                selected = value.toString();
-                                print(selected);
-                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 0.3),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 10),
+                              controller: myControllerDateTo,
+                              decoration: const InputDecoration.collapsed(
+                                  hintText: 'Date to',
+                                  fillColor: Colors.transparent,
+                                  hintStyle: TextStyle(fontSize: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.red))),
+                              onTap: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+
+                                _selectDateTo(context);
+                              },
                             ),
                           ),
-                        ],
-                      )),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Text('Pilih Periode'),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 3, 0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: TextFormField(
-                            // decoration: InputDecoration.collapsed(hintText: 'Date From',),
-                            onTap: () {
-                              // Below line stops keyboard from appearing
-                              FocusScope.of(context)
-                                  .requestFocus(new FocusNode());
-
-                              showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1990),
-                                  lastDate: DateTime(2030));
-
-                              // Show Date Picker Here
-                            },
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: const ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.blue),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 0.3),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: TextFormField(
-                            onTap: () {
-                              // Below line stops keyboard from appearing
-                              FocusScope.of(context)
-                                  .requestFocus(new FocusNode());
-
-                              showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1990),
-                                  lastDate: DateTime(2030));
-
-                              // Show Date Picker Here
-                            },
+                          child: const Text(
+                            'Search',
+                            style: TextStyle(color: Colors.white),
                           ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text('Search'),
-                        style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.blue),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            ],
-          )),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.43,
-          padding: EdgeInsets.all(15),
-          child: ListView(
-            children: [
-              // TextField(
-              //   controller: profileC.nameC,
-              //   textInputAction: TextInputAction.next,
-              //   autocorrect: false,
-              //   decoration: InputDecoration(
-              //     labelText: "Full Name",
-              //     border: OutlineInputBorder(),
-              //   ),
-              // ),
-              // SizedBox(height: 15),
-              TextField(
-                controller: profileC.emailC,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),labelText: 'Email',),
-              ),
-              SizedBox(height: 15),
-              Obx(() => TextField(
-                obscureText: profileC.hidden.value,
-                controller: profileC.password,
-                autocorrect: false,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye),onPressed: ()=>profileC.hidden.toggle(),),
-                    border: OutlineInputBorder(),labelText: 'Password',),
-                // onEditingComplete: () => profileC.login(
-                //   // profileC.nameC.text,
-                //   profileC.emailC.text,
-                //   profileC.password.text,
-                //   // profileC.phoneC.text,
-                // ),
-              ),),
-              
-              SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () => profileC.login(
-                  profileC.emailC.text,
-                  profileC.password.text,
-                ),
-                child: Text("LOGIN", style: TextStyle(color: Colors.white),),
-              ),
-            ],
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-          // child: ListView.builder(
-          //     itemCount: 100,
-          //     itemBuilder: (context, index) {
-
-          //       return Padding(
-          //         padding: const EdgeInsets.all(20.0),
-          //         child: Card(
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(15),
-          //             side: BorderSide(
-          //               color: Colors.black,
-          //             ),
-          //           ),
-          //           elevation: 16,
-          //           shadowColor: Colors.grey,
-          //           child: ListTile(
-          //             // leading: const Icon(Icons.flight_land),
-          //             title: Padding(
-          //               padding: const EdgeInsets.symmetric(
-          //                   vertical: 10, horizontal: 15),
-          //               child: Text(
-          //                 'New',
-          //                 style: TextStyle(
-          //                   fontSize: 20,
-          //                   fontWeight: FontWeight.w600,
-          //                   color: Colors.blueAccent,
-          //                 ),
-          //               ),
-          //             ),
-          //             subtitle: Container(
-          //               child: Padding(
-          //                 padding: const EdgeInsets.all(15.0),
-          //                 child: Column(
-          //                   mainAxisAlignment: MainAxisAlignment.start,
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: [
-          //                     Padding(
-          //                       padding:
-          //                           const EdgeInsets.symmetric(vertical: 5),
-          //                       child: Text(
-          //                         faker.person.name(),
-          //                         style: TextStyle(
-          //                             fontSize: 22,
-          //                             fontWeight: FontWeight.w500),
-          //                       ),
-          //                     ),
-          //                     Padding(
-          //                       padding:
-          //                           const EdgeInsets.symmetric(vertical: 5),
-          //                       child: Text(
-          //                         'Company Name',
-          //                         style: TextStyle(fontSize: 18),
-          //                       ),
-          //                     ),
-          //                     Padding(
-          //                       padding:
-          //                           const EdgeInsets.symmetric(vertical: 5),
-          //                       child: Text(
-          //                         'Sales :${faker.person.name()}',
-          //                         style: TextStyle(
-          //                             fontWeight: FontWeight.bold,
-          //                             color: Colors.black,
-          //                             fontSize: 18),
-          //                       ),
-          //                     ),
-          //                     Text('06/26/2023 1:24 PM'),
-          //                   ],
-          //                 ),
-          //               ),
-          //             ),
-          //             trailing: const Icon(Icons.add),
-          //           ),
-          //         ),
-          //       );
-          //     }),
-        ),
-      ],
+          Center(
+            child: SfFunnelChart(
+              series: FunnelSeries<SalesData, String>(
+                  explode: true,
+                  explodeIndex: 1,
+                  height: '100%',
+                  width: '95%',
+                  neckHeight: '0%',
+                  neckWidth: '40%',
+                  gapRatio: 0.1,
+                  // Bind data source
+                  dataSource: <SalesData>[
+                    SalesData('Jan', 40),
+                    SalesData('Feb', 38),
+                    SalesData('Mar', 44),
+                    SalesData('Apr', 58),
+                    SalesData('May', 67)
+                  ],
+                  xValueMapper: (SalesData sales, _) => sales.year,
+                  yValueMapper: (SalesData sales, _) => sales.sales,
+                  dataLabelSettings: const DataLabelSettings(isVisible: false)),
+            ),
+          ),
+        ],
+      ),
     );
   }
+}
+
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
 }

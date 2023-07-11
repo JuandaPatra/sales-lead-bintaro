@@ -14,13 +14,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Widget> pages =  <Widget>[
+  final List<Widget> pages = <Widget>[
     LeadsPage(),
     ReportPage(),
     DashboardPage()
   ];
   int currentTab = 0;
-  
+
   final PageStorageBucket _bucket = PageStorageBucket();
   final auth = Get.put(UserController());
   @override
@@ -54,10 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: myAppBar,
       drawer: MyDrawer(),
-      body:Obx(() => PageStorage(
+      body: PageStorage(
         bucket: _bucket,
-        child: auth.isLogin == true ? pages[0] : pages[currentTab],
-      )) ,
+        child: pages[currentTab],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentTab,
         onTap: (int index) {
@@ -83,4 +83,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
