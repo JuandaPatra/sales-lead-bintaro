@@ -16,8 +16,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> pages = <Widget>[
     LeadsPage(),
-    ReportPage(),
-    DashboardPage()
+    const ReportPage(),
+    const DashboardPage()
   ];
   int currentTab = 0;
 
@@ -37,11 +37,9 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.contain,
             height: mediaQueryWidht * 0.1,
           ),
-          Container(
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "https://4.bp.blogspot.com/-Jx21kNqFSTU/UXemtqPhZCI/AAAAAAAAh74/BMGSzpU6F48/s1600/funny-cat-pictures-047-001.jpg"),
-            ),
+          const CircleAvatar(
+            backgroundImage: NetworkImage(
+                "https://4.bp.blogspot.com/-Jx21kNqFSTU/UXemtqPhZCI/AAAAAAAAh74/BMGSzpU6F48/s1600/funny-cat-pictures-047-001.jpg"),
           )
         ],
       ),

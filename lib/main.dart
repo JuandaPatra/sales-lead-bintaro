@@ -22,11 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Obx(
-        () => profileC.isLogin == true
-            ? profileC.isTokenAuth == true
-                ? MyHomePage()
-                : LoginPage()
-            : LoginPage(),
+        () => profileC.isLogin.isTrue ? MyHomePage() :LoginPage()
       ),
       theme: MyThemeData(),
     );

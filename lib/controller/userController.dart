@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../screens/homepage.dart';
 import 'package:flutter_sales_lead/pages/leads.dart';
@@ -17,6 +19,12 @@ class UserController extends GetxController {
 
   var authUser = List<Map<String, dynamic>>.empty().obs;
 
+  var leadsAll = List<Map<String, dynamic>>.empty().obs;
+
+  var leadCoba = List<Map<String, dynamic>>.empty().obs;
+
+  var leadsAll1 = List<dynamic>.empty().obs;
+
   var username = ''.obs;
   var emailSave = ''.obs;
 
@@ -28,7 +36,6 @@ class UserController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // nameC = TextEditingController();
     emailC = TextEditingController();
     password = TextEditingController();
     await GetStorage.init();
@@ -44,8 +51,15 @@ class UserController extends GetxController {
     if (hasExpired == false) {
       isTokenAuth.value = true;
       isLogin.value = true;
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 1), () {
         leadsPage.value = true;
+        UserProvider().leads().then((value) {
+          final results = value.body;
+          // print(results);
+          var resultToJson = results['data'];
+
+          leadsAll1.value = resultToJson;
+        });
       });
     }
   }
@@ -66,7 +80,7 @@ class UserController extends GetxController {
   }
 
   void snackBarLoginSuccess(String msg) {
-    Get.snackbar("Success", msg, duration: const Duration(seconds: 10));
+    Get.snackbar("Success", msg, duration: const Duration(seconds: 3));
   }
 
   Future<void> setToken(String msg) async {
@@ -79,12 +93,6 @@ class UserController extends GetxController {
     if (hasExpired == false) {
       isTokenAuth.value = true;
     }
-    // print(hasExpired);
-    // print(dateExpired);
-    // if (hasExpired) {
-    //   print(hasExpired);
-    //   // Get.to(MyHomePage());
-    // }
   }
 
   // void add(String name, String email, String phone) {
@@ -117,7 +125,7 @@ class UserController extends GetxController {
           final result = res.body as Map<String, dynamic>;
           final resultData = result['data'] as Map<String, dynamic>;
           final tokenId = resultData['token'];
-          snackBarLoginSuccess(tokenId.toString());
+          // snackBarLoginSuccess(tokenId.toString());
           setToken(tokenId);
           username.value = resultData['username'];
           emailSave.value = resultData['email'];
@@ -128,7 +136,7 @@ class UserController extends GetxController {
           //   'password':password
           // });
           // isLogin.value = true;
-        }).catchError(() => printError());
+        }).catchError(() => snackBarError("gagal"));
       } else {
         snackBarError("Masukan email valid");
       }

@@ -122,7 +122,7 @@ class LeadsPage extends StatelessWidget {
                                             print(print);
                                           }),
                                       FilterChip(
-                                          padding: EdgeInsets.all(10),
+                                          padding: const EdgeInsets.all(10),
                                           label: const SizedBox(
                                             child:
                                                 Text('Update Terakhir Turun'),
@@ -243,7 +243,7 @@ class LeadsPage extends StatelessWidget {
             ? SizedBox(
                 height: MediaQuery.of(context).size.height * 0.67,
                 child: ListView.builder(
-                    itemCount: 100,
+                    itemCount: profileC.leadsAll1.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -285,7 +285,7 @@ class LeadsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5),
                                       child: Text(
-                                        '${leadC.lead.value.leadName}',
+                                        '${profileC.leadsAll1[index]['leadName']}',
                                         style: const TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.w500),
@@ -295,7 +295,7 @@ class LeadsPage extends StatelessWidget {
                                       padding:
                                           EdgeInsets.symmetric(vertical: 5),
                                       child: Text(
-                                        'Company Name',
+                                        'Bintaro Jaya',
                                         style: TextStyle(fontSize: 18),
                                       ),
                                     ),
@@ -303,14 +303,15 @@ class LeadsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5),
                                       child: Text(
-                                        'Sales :${leadC.lead.value.salesName}',
+                                        'Sales : ${profileC.leadsAll1[index]['userNotifiedName']}',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
                                             fontSize: 18),
                                       ),
                                     ),
-                                    Text('${leadC.lead.value.date}'),
+                                    Text(
+                                        '${profileC.leadsAll1[index]['leadCreatedAt']}'),
                                   ],
                                 ),
                               ),

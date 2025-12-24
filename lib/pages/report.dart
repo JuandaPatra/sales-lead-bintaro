@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 
 class ReportPage extends StatelessWidget {
   const ReportPage({
@@ -9,14 +8,13 @@ class ReportPage extends StatelessWidget {
   });
   // final double mediaQueryWidht;
   // final double mediaQueryHeight;
-  
+
   @override
   Widget build(BuildContext context) {
-    var faker = Faker();
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               bottom: BorderSide(
                 color: Colors.grey,
@@ -26,23 +24,21 @@ class ReportPage extends StatelessWidget {
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.10,
-          child: Container(
-              child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: Text(
                   'Jadwal Laporan',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                 ),
               ),
             ],
-          )),
+          ),
         ),
-        Container(
+        SizedBox(
           height: MediaQuery.of(context).size.height * 0.7,
           child: ListView.builder(
               itemCount: 1,
@@ -53,23 +49,22 @@ class ReportPage extends StatelessWidget {
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
-                      side: BorderSide(
+                      side: const BorderSide(
                         color: Colors.black12,
                       ),
                     ),
                     elevation: 16,
                     shadowColor: Colors.grey,
                     child: ListTile(
-                      subtitle: Container(
+                      subtitle: SizedBox(
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
                                 child: Text(
                                   'cek',
                                   style: TextStyle(
@@ -78,45 +73,46 @@ class ReportPage extends StatelessWidget {
                                       color: Colors.blue),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5),
                                 child: Text(
                                   'Pengiriman Berikutnya dijadwalkan',
                                   style: TextStyle(fontSize: 14),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     TextButton(
                                       onPressed: () {},
-                                      child: Text('Ubah'),
                                       style: TextButton.styleFrom(
                                         foregroundColor: Colors.white,
                                         backgroundColor: Colors
                                             .blueAccent, // Background Color
                                       ),
+                                      child: const Text('Ubah'),
                                     ),
                                     TextButton(
                                       onPressed: () {},
-                                      child: Text('Download'),
                                       style: TextButton.styleFrom(
                                         foregroundColor: Colors.white,
                                         backgroundColor: Colors
                                             .blueAccent, // Background Color
                                       ),
+                                      child: const Text('Download'),
                                     ),
                                     TextButton(
                                       onPressed: () {},
-                                      child: Text('Hapus'),
                                       style: TextButton.styleFrom(
                                         foregroundColor: Colors.white,
                                         backgroundColor: Colors
                                             .pinkAccent, // Background Color
                                       ),
+                                      child: const Text('Hapus'),
                                     ),
                                   ],
                                 ),

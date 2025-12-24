@@ -3,6 +3,7 @@ import 'package:flutter_sales_lead/controller/leadController.dart';
 import 'package:flutter_sales_lead/controller/userController.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import '../models/sales.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -228,10 +229,4 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
     );
   }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
 }
